@@ -1,4 +1,7 @@
+import 'package:flask_api_mobile/auth/bloc/auth_bloc.dart';
+import 'package:flask_api_mobile/screens/HomePage.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 void main() {
   runApp(App());
@@ -7,10 +10,15 @@ void main() {
 class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: "Fast Api Pracice",
-      home: Scaffold(
-        body: Text("This is body"),
+    return BlocProvider(
+      create: (BuildContext context) => AuthBloc(),
+      child: MaterialApp(
+        home: Scaffold(
+          appBar: AppBar(
+            title: Text("data"),
+          ),
+          body: HomePage(),
+        ),
       ),
     );
   }
