@@ -15,28 +15,16 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   UserRepository _repository = new UserRepository();
 
   Stream<AuthState> mapEventToState(AuthEvent event) async* {
-    if (event is AuthStartEvent) {
-      yield InitialAuthState();
-    }
     if (event is SignUpEvent) {
-      e_mail = _secureStorage.getEmail() as String;
-
-      if (e_mail != null) {
-        yield InitialAuthState();
-      }
-      yield SignUpState();
+      yield* _mapSignUpEventToState(event);
     }
-    if (event is AuthStartEvent) {
-      yield InitialAuthState();
-    }
-    yield SignUpState();
   }
 
-  Stream<AuthState> _mapSignUpStateToSignUpEvent(SignUpEvent event) async* {
+  Stream<AuthState> _mapSignUpEventToState(SignUpEvent event) async* {
     yield InitialAuthState();
-    final Future<String?> email = _secureStorage.getEmail();
-    if (email == null) {
-      yield SignUpState();
-    }
+    // final String email = _secureStorage.getEmail() as String;
+    // if (email == null) {
+    //   yield SignUpState();
+    // }
   }
 }
