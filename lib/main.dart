@@ -13,6 +13,7 @@ class App extends StatelessWidget {
     return BlocProvider(
       create: (BuildContext context) => AuthBloc(),
       child: MaterialApp(
+        debugShowCheckedModeBanner: false,
         home: Scaffold(
           appBar: AppBar(
             title: Text("data"),
