@@ -14,11 +14,8 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<AuthBloc, AuthState>(builder: (context, state) {
-      if (state is InitialAuthState) {
-        return SplashScreen();
-      }
-      return SignUpPage();
-    });
+    return Center(
+      child: Text("Home Page"),
+    );
   }
 }

@@ -12,10 +12,9 @@ class _SignUpPageState extends State<SignUpPage> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<AuthBloc, AuthState>(listener: (context, state) {
-      if (state is SignUpState) {
-        child:
-        Container(
+    return BlocBuilder<AuthBloc, AuthState>(builder: (context, state) {
+      if (state is AuthNotAuthenticated) {
+        return Container(
           child: Form(
             key: _formKey,
             child: Column(
@@ -61,6 +60,21 @@ class _SignUpPageState extends State<SignUpPage> {
           ),
         );
       }
+      if (state is InitialAuthState) {
+        return Center(
+          child: Text("Initial Auth State"),
+        );
+      }
+      if (state is AuthLoadding) {
+        return Center(
+          child: Text("AuthLoadding State"),
+        );
+      }
+      return Center(
+        child: CircularProgressIndicator(
+          strokeWidth: 2,
+        ),
+      );
     });
   }
 }

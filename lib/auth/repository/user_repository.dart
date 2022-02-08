@@ -10,11 +10,21 @@ class UserRepository {
   FlutterSecureStorage _storage = new FlutterSecureStorage();
   UserApiProvide _provider = new UserApiProvide();
 
-  Future<void> saveUser(String first_name, String last_name, String email,
+  Future<String?> saveUser(String first_name, String last_name, String email,
       String password) async {
     final object =
         await _provider.fetchUser(first_name, last_name, email, password);
     String e_mail = object.email.toString();
     _storage.write(key: _accessKey, value: e_mail);
+
+    return e_mail;
+  }
+
+  Future<String?> getEmail() async {
+    return _storage.read(key: _accessKey);
+  }
+
+  Future<void> deleteEmail() async {
+    return _storage.delete(key: _accessKey);
   }
 }
