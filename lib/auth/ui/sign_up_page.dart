@@ -12,8 +12,9 @@ class _SignUpPageState extends State<SignUpPage> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<AuthBloc, AuthState>(builder: (context, state) {
-      if (state is AuthNotAuthenticated) {
+    return Scaffold(
+        body: BlocBuilder<AuthBloc, AuthState>(builder: (context, state) {
+      if (state is InitialAuthState) {
         return Container(
           child: Form(
             key: _formKey,
@@ -75,6 +76,6 @@ class _SignUpPageState extends State<SignUpPage> {
           strokeWidth: 2,
         ),
       );
-    });
+    }));
   }
 }
