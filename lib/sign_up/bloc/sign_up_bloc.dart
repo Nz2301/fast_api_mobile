@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flask_api_mobile/auth/bloc/auth_bloc.dart';
 import 'package:flask_api_mobile/auth/repository/user_repository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -16,8 +18,8 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
         _userRepository = userRepository,
         super(SignUpInitial());
 
-  // @override
-  Stream<SignUpState> mapSignUpEventToState(SignUpEvent event) async* {
+  @override
+  Stream<SignUpState> mapEventToState(SignUpEvent event) async* {
     if (event is SignUpWithEmailEvent) {
       yield* _mapSignUpWithEmailToState(event);
     }
@@ -28,13 +30,14 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
     yield SignUpLoading();
 
     try {
+      await Future.delayed(Duration(seconds: 2));
       final user = _userRepository.saveUser(
           event.first_name, event.last_name, event.e_mail, event.password);
-
+      log("user: $user");
       if (user != null) {
         _authBloc.add(UserLogedInEvent(user: user.toString()));
         yield SignUpSuccess();
-        yield SignUpInitial();
+        yield SignUpLoading();
       } else {
         yield SignUpFailure(error: 'Something very weird just happened');
       }

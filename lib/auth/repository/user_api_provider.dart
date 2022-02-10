@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flask_api_mobile/auth/model/user.dart';
 import 'dart:convert';
 
@@ -19,6 +21,7 @@ class UserApiProvide {
         "password": password
       },
     );
+    log("${response.statusCode}");
 
     if (response.statusCode == 200) {
       return json.decode(response.body);
