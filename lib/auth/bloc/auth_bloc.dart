@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flask_api_mobile/auth/model/user.dart';
 import 'package:flask_api_mobile/auth/repository/user_repository.dart';
 import 'package:flask_api_mobile/secure_storage.dart';
@@ -16,12 +18,15 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   @override
   Stream<AuthState> mapEventToState(AuthEvent event) async* {
     if (event is AuthStartEvent) {
+      log("AuthStartEvent");
       yield* _appStartEventToState(event);
     }
     if (event is UserLogedInEvent) {
+      log("UserLogedInEvent");
       yield* _userLogedInEventToState(event);
     }
     if (event is UserLogedOutEvent) {
+      log("UserLogedOutEvent");
       yield* _userLogedOutToState(event);
     }
   }

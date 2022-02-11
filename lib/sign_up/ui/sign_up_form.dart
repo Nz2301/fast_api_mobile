@@ -23,37 +23,39 @@ class _SignUpForm extends State<SignUpForm> {
     final _signUpBloc = BlocProvider.of<SignUpBloc>(context);
 
     _onLoginButtonPressed() {
+      log("this is key: ${_key.currentState!.validate()}");
       if (_key.currentState!.validate()) {
         _signUpBloc.add(SignUpWithEmailEvent(
             first_name: _firstNameController.text,
             last_name: _lastNameController.text,
             e_mail: _emailController.text,
             password: _passwordController.text));
-        log("contex");
+        log("context");
       } else {
+        log("validate else");
         setState(() {
           _autoValidate = true;
         });
       }
     }
 
-    return BlocListener<SignUpBloc, SignUpState>(listener: (context, state) {
-      if (state is SignUpFailure) {
-        ScaffoldMessenger.of(context)
-          ..hideCurrentSnackBar()
-          ..showSnackBar(
-            const SnackBar(content: Text('Authentication Failure')),
-          );
-      }
-    }, child: BlocBuilder<SignUpBloc, SignUpState>(
+    return BlocBuilder<SignUpBloc, SignUpState>(
       builder: (context, state) {
+        if (state is SignUpFailure) {
+          ScaffoldMessenger.of(context)
+            ..hideCurrentSnackBar()
+            ..showSnackBar(
+              const SnackBar(content: Text('Authentication Failure')),
+            );
+        }
         if (state is SignUpLoading) {
-          return Center(
+          Center(
             child: CircularProgressIndicator(),
           );
         }
         if (state is SignUpInitial) {
-          return Form(
+          log("this is inside state");
+          Form(
             key: _key,
             child: SingleChildScrollView(
               child: Column(
@@ -135,8 +137,11 @@ class _SignUpForm extends State<SignUpForm> {
                     shape: new RoundedRectangleBorder(
                         borderRadius: new BorderRadius.circular(8.0)),
                     child: Text('SIGN UP'),
-                    onPressed:
-                        state is SignUpLoading ? () {} : _onLoginButtonPressed,
+                    onPressed: state is SignUpLoading
+                        ? () {
+                            log("this is inside empty brackets");
+                          }
+                        : _onLoginButtonPressed,
                   )
                 ],
               ),
@@ -149,6 +154,6 @@ class _SignUpForm extends State<SignUpForm> {
           ),
         );
       },
-    ));
+    );
   }
 }

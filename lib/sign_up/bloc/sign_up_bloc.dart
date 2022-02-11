@@ -21,6 +21,7 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
   @override
   Stream<SignUpState> mapEventToState(SignUpEvent event) async* {
     if (event is SignUpWithEmailEvent) {
+      log("SignUpWithEmailEvent");
       yield* _mapSignUpWithEmailToState(event);
     }
   }
